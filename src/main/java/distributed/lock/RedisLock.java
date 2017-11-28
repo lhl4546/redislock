@@ -45,14 +45,14 @@ public class RedisLock {
      * @param timeoutSecond timeout in second
      * @throws InterruptedException
      */
-    public void lockInterruptibly(String key, String value, int timeoutSecond) throws InterruptedException {
-        String retVal = redisOp.set(key, value, "NX", "EX", timeoutSecond);
+    public void lockInterruptibility(String key, String value, int timeoutSecond) throws InterruptedException {
+        String retVal = redisOp.set(key, value, RedisOp.NX, RedisOp.EX, timeoutSecond);
         if ("OK".equals(retVal)) {
             return;
         }
 
         while (true) {
-            retVal = redisOp.set(key, value, "NX", "EX", timeoutSecond);
+            retVal = redisOp.set(key, value, RedisOp.NX, RedisOp.EX, timeoutSecond);
             if ("OK".equals(retVal)) {
                 return;
             }
